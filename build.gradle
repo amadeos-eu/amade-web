@@ -4,7 +4,9 @@ plugins {
 }
 
 group = 'org.datazuul.amadeos'
-version = '0.1.0-SNAPSHOT'
+version = '0.1.0'
+
+def mainClassName = 'org.datazuul.amadeos.web.bootstrap.AmadeWebApplication'
 
 java {
     toolchain {
@@ -13,7 +15,7 @@ java {
 }
 
 application {
-    mainClass = 'org.datazuul.amadeos.web.AmadeWebApplication'
+    mainClass = mainClassName
 }
 
 repositories {
@@ -22,25 +24,43 @@ repositories {
 }
 
 // JavaFX 21 is the LTS line for Java 21; its updates also bring newer WebKit releases.
+// The JavaFX jars carry native libraries, so the build picks those of the machine it runs on:
+// the .deb is built on Linux (amd64 or arm64), the Windows installer on Windows.
 def javafxVersion = '21.0.12'
-def javafxPlatform = System.getProperty('os.arch') == 'aarch64' ? 'linux-aarch64' : 'linux'
+def osName = System.getProperty('os.name')
+def osArch = System.getProperty('os.arch')
+def javafxPlatform = osName.startsWith('Windows') ? 'win'
+        : osName.startsWith('Mac') ? (osArch == 'aarch64' ? 'mac-aarch64' : 'mac')
+        : (osArch == 'aarch64' ? 'linux-aarch64' : 'linux')
+def debArch = osArch == 'aarch64' ? 'arm64' : 'amd64'
 
 dependencies {
     // Theme, Motif look, start-up and XDG helpers shared by all amadeOS applications.
     // With ../amade-commons checked out, settings.gradle builds that checkout instead (composite build).
-    implementation 'com.github.datazuul:amade-commons:368124c'
+    implementation 'com.github.datazuul:amade-commons:368124c665'
     // WebView inside Swing through JFXPanel; javafx.web needs controls and media as well.
     ['base', 'graphics', 'controls', 'media', 'swing', 'web'].each { module ->
         implementation "org.openjfx:javafx-${module}:${javafxVersion}:${javafxPlatform}"
     }
     runtimeOnly 'ch.qos.logback:logback-classic:1.5.18'
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+    // Tests compare English texts, whatever the language of the build machine.
+    systemProperty 'user.language', 'en'
+    systemProperty 'user.country', 'US'
 }
 
 jar {
     archiveBaseName = 'amade-web'
     manifest {
         attributes(
-            'Main-Class': 'org.datazuul.amadeos.web.AmadeWebApplication',
+            'Main-Class': mainClassName,
             'Implementation-Title': 'amade-web',
             'Implementation-Version': project.version
         )
@@ -48,5 +68,160 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+    // Signed dependency jars would otherwise invalidate the fat jar.
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.register('deb') {
+    dependsOn jar
+    description = 'Builds a standard Debian (.deb) package for amade-web'
+    group = 'distribution'
+
+    doLast {
+        if (!osName.startsWith('Linux')) {
+            throw new GradleException('The .deb holds the JavaFX libraries of the build machine; build it on Linux')
+        }
+        def buildDirFile = layout.buildDirectory.get().asFile
+        def stagingDir = new File(buildDirFile, 'deb-staging')
+        delete(stagingDir)
+
+        def optDir = new File(stagingDir, 'opt/amade-web')
+        def binDir = new File(stagingDir, 'usr/bin')
+        def appDir = new File(stagingDir, 'usr/share/applications')
+        def iconDir = new File(stagingDir, 'usr/share/icons/hicolor/48x48/apps')
+        def svgDir = new File(stagingDir, 'usr/share/icons/hicolor/scalable/apps')
+        def docDir = new File(stagingDir, 'usr/share/doc/amade-web')
+        def debianDir = new File(stagingDir, 'DEBIAN')
+        def distDir = new File(buildDirFile, 'distributions')
+        [optDir, binDir, appDir, iconDir, svgDir, docDir, debianDir, distDir]*.mkdirs()
+
+        copy {
+            from jar.archiveFile
+            into optDir
+            rename { 'amade-web.jar' }
+        }
+
+        def launcher = new File(binDir, 'amade-web')
+        launcher.text = """#!/bin/sh
+exec /usr/bin/java -jar /opt/amade-web/amade-web.jar "\$@"
+"""
+        launcher.setExecutable(true, false)
+
+        copy {
+            from 'packaging/amade-web.desktop'
+            into appDir
+        }
+        copy {
+            from 'src/main/resources/icons/amade-web.png'
+            into iconDir
+        }
+        copy {
+            from 'packaging/amade-web.svg'
+            into svgDir
+        }
+        copy {
+            from 'LICENSE'
+            into docDir
+            rename { 'copyright' }
+        }
+
+        // The JavaFX libraries (glass, prism, WebKit, media) link against GTK 3 and its dependencies.
+        new File(debianDir, 'control').text = """Package: amade-web
+Version: ${project.version}
+Section: web
+Priority: optional
+Architecture: ${debArch}
+Depends: default-jre | openjdk-21-jre | java21-runtime, libgtk-3-0t64 | libgtk-3-0
+Maintainer: amadeOS Project <developers@datazuul.com>
+Description: Web browser and documentation viewer for amadeOS
+ A Motif/CDE-styled web browser for the amadeOS desktop built on the
+ JavaFX WebView (WebKit). It runs modern web applications such as
+ Angular sites and shows local HTML documentation.
+"""
+
+        def debFile = new File(distDir, "amade-web_${project.version}_${debArch}.deb")
+        def process = new ProcessBuilder('dpkg-deb', '--root-owner-group', '--build',
+                stagingDir.absolutePath, debFile.absolutePath)
+                .redirectErrorStream(true)
+                .start()
+        process.inputStream.eachLine { println it }
+        if (process.waitFor() != 0) {
+            throw new GradleException('dpkg-deb failed')
+        }
+        println "[deb] Created ${debFile.absolutePath}"
+    }
+}
+
+tasks.register('installToAmadeOs') {
+    dependsOn 'deb'
+    description = 'Builds and drops the .deb package into ../amadeos/config/packages.chroot/'
+    group = 'distribution'
+
+    doLast {
+        def targetDir = file('../amadeos/config/packages.chroot')
+        targetDir.mkdirs()
+        def debFile = new File(layout.buildDirectory.get().asFile, "distributions/amade-web_${project.version}_${debArch}.deb")
+        copy {
+            from debFile
+            into targetDir
+        }
+        println "[installToAmadeOs] Copied ${debFile.name} to ${targetDir.absolutePath}"
+    }
+}
+
+// Windows installer with jpackage: the fat jar plus a Java runtime, so Windows users need no Java.
+// jpackage builds Windows packages only on Windows; MSI and EXE also need WiX Toolset 3 on the PATH.
+//   ./gradlew windowsInstaller                           (MSI; output in build/windows/<type>/)
+//   ./gradlew windowsInstaller -PinstallerType=exe       (setup .exe)
+//   ./gradlew windowsInstaller -PinstallerType=app-image (folder with amade-web.exe, no WiX needed)
+tasks.register('windowsInstaller') {
+    dependsOn jar
+    description = 'Builds a Windows installer (MSI, EXE or app image) with jpackage'
+    group = 'distribution'
+
+    def jdk = javaToolchains.launcherFor { languageVersion = java.toolchain.languageVersion }
+    doLast {
+        if (!osName.startsWith('Windows')) {
+            throw new GradleException('jpackage builds Windows packages only on Windows')
+        }
+        def type = project.findProperty('installerType') ?: 'msi'
+        def buildDirFile = layout.buildDirectory.get().asFile
+        // jpackage bundles everything in --input, so give it a folder with just the fat jar.
+        def inputDir = new File(buildDirFile, 'jpackage-input')
+        def destDir = new File(buildDirFile, "windows/$type")
+        delete(inputDir, destDir)
+        copy {
+            from jar.archiveFile
+            into inputDir
+        }
+
+        def jpackage = jdk.get().metadata.installationPath.file('bin/jpackage.exe').asFile
+        def args = [jpackage.absolutePath,
+                    '--type', type,
+                    '--name', 'amade-web',
+                    // MSI versions are numeric only: 0.1.0-SNAPSHOT becomes 0.1.0
+                    '--app-version', project.version.toString().replaceAll(/[^0-9.].*$/, ''),
+                    '--vendor', 'datazuul',
+                    '--description', 'Web browser and documentation viewer',
+                    '--copyright', 'datazuul, licensed under the EUPL-1.2',
+                    '--input', inputDir.absolutePath,
+                    '--main-jar', jar.archiveFile.get().asFile.name,
+                    '--main-class', mainClassName,
+                    '--icon', file('packaging/windows/amade-web.ico').absolutePath,
+                    '--dest', destDir.absolutePath]
+        if (type != 'app-image') {
+            args += ['--win-menu', '--win-menu-group', 'amadeOS', '--win-shortcut', '--win-dir-chooser',
+                     '--license-file', file('LICENSE').absolutePath,
+                     // Never change: lets a newer installer replace an installed version.
+                     '--win-upgrade-uuid', '3f6b2a0e-5c1d-4e8a-9b7f-2d4c6e8a1b35']
+        }
+
+        def process = new ProcessBuilder(args).redirectErrorStream(true).start()
+        process.inputStream.eachLine { println it }
+        if (process.waitFor() != 0) {
+            throw new GradleException('jpackage failed')
+        }
+        destDir.eachFile { println "[windowsInstaller] Created ${it.absolutePath}" }
+    }
 }

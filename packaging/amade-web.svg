@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Globe on a beveled warm-grey plate, in the flat style of the other amade icons. -->
+  <rect x="2" y="2" width="44" height="44" rx="5" fill="#CEC2BB" stroke="#8C8079" stroke-width="2"/>
+  <defs>
+    <radialGradient id="sea" cx="0.38" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#8EC5F0"/>
+      <stop offset="1" stop-color="#2E6DB4"/>
+    </radialGradient>
+    <clipPath id="ball"><circle cx="24" cy="24" r="17"/></clipPath>
+  </defs>
+  <circle cx="24" cy="24" r="17" fill="url(#sea)"/>
+  <g clip-path="url(#ball)" fill="#5FA247" stroke="#2F5E22" stroke-width="0.8">
+    <path d="M10 13 C15 9 22 11 21 16 C20 20 15 19 14 23 C13 27 10 27 8 24 Z"/>
+    <path d="M25 9 C31 8 38 12 39 17 C36 18 33 16 31 19 C29 22 33 24 31 28 C29 33 26 36 24 41 C21 36 23 31 21 28 C19 25 24 22 23 18 C22 15 22 11 25 9 Z"/>
+    <path d="M33 31 C36 30 40 31 41 34 C39 37 35 38 33 36 Z"/>
+  </g>
+  <g clip-path="url(#ball)" fill="none" stroke="#1C3F66" stroke-width="0.9" opacity="0.7">
+    <ellipse cx="24" cy="24" rx="7" ry="17"/>
+    <line x1="24" y1="7" x2="24" y2="41"/>
+    <line x1="7" y1="24" x2="41" y2="24"/>
+    <path d="M9 16 Q24 20 39 16"/>
+    <path d="M9 32 Q24 28 39 32"/>
+  </g>
+  <circle cx="24" cy="24" r="17" fill="none" stroke="#1C2A3A" stroke-width="2"/>
+</svg>

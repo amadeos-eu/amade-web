@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=amadeOS Web Browser
+Name[de]=amadeOS Webbrowser
+GenericName=Web Browser
+GenericName[de]=Webbrowser
+Comment=Web browser and documentation viewer
+Comment[de]=Webbrowser und Dokumentationsanzeige
+Icon=amade-web
+Exec=/usr/bin/amade-web %u
+Terminal=false
+Categories=Network;WebBrowser;
+MimeType=text/html;application/xhtml+xml;image/svg+xml;x-scheme-handler/http;x-scheme-handler/https;
+Keywords=web;browser;internet;html;documentation;help;
+StartupNotify=true
