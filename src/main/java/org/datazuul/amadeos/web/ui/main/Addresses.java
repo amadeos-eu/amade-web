@@ -7,7 +7,8 @@ import java.util.Locale;
 
 /** Turns what is typed into the address field or given on the command line into a URL. */
 public final class Addresses {
-    public static final String HOME = "https://alexana.org";
+    /** The installed documentation: {@code /usr/share/doc} on Linux, the home directory elsewhere. */
+    public static final String HOME = home();
 
     private Addresses() {
     }
@@ -23,14 +24,22 @@ public final class Addresses {
         if (text.equals("~") || text.startsWith("~/")) {
             return fileUrl(Path.of(System.getProperty("user.home"), text.substring(1).replaceFirst("^/", "")));
         }
-        Path path = localPath(text);
-        if (path != null) return fileUrl(path);
+        // An anchor after a path (guide.html#install) is not part of the file name.
+        int hash = text.indexOf('#');
+        String anchor = hash < 0 ? "" : text.substring(hash);
+        Path path = localPath(hash < 0 ? text : text.substring(0, hash));
+        if (path != null) return fileUrl(path) + anchor;
         String lower = text.toLowerCase(Locale.ROOT);
         if (lower.equals("localhost") || lower.startsWith("localhost:") || lower.startsWith("localhost/")
                 || lower.startsWith("127.0.0.1")) {
             return "http://" + text;
         }
         return "https://" + text;
+    }
+
+    private static String home() {
+        Path doc = Path.of("/usr/share/doc");
+        return (Files.isDirectory(doc) ? doc : Path.of(System.getProperty("user.home"))).toUri().toString();
     }
 
     private static boolean hasScheme(String text, String... schemes) {

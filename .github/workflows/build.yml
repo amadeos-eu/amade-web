@@ -28,17 +28,17 @@ jobs:
           count=$(grep -ho 'tests="[0-9]*"' build/test-results/test/*.xml | grep -o '[0-9]*' | paste -sd+ | bc)
           skipped=$(grep -ho 'skipped="[0-9]*"' build/test-results/test/*.xml | grep -o '[0-9]*' | paste -sd+ | bc)
           echo "Tests run: $count, skipped: $skipped"
-          test "$count" -ge 8
+          test "$count" -ge 20
           test "$skipped" -eq 0
       - name: Package
         run: ./gradlew jar deb --no-daemon
       - name: Check the fat jar and the package
         run: |
           jar=$(ls build/libs/amade-web-*.jar)
-          # The Linux JavaFX libraries, WebKit among them, must be in the fat jar.
-          unzip -l "$jar" | grep -q libjfxwebkit.so
-          dpkg-deb --info build/distributions/amade-web_*_amd64.deb
-          dpkg-deb --contents build/distributions/amade-web_*_amd64.deb | grep -q usr/share/applications/amade-web.desktop
+          # The renderer must be in the fat jar.
+          unzip -l "$jar" | grep -q org/xhtmlrenderer/simple/XHTMLPanel.class
+          dpkg-deb --info build/distributions/amade-web_*_all.deb
+          dpkg-deb --contents build/distributions/amade-web_*_all.deb | grep -q usr/share/applications/amade-web.desktop
       - name: Upload test reports
         if: failure()
         uses: actions/upload-artifact@v7
@@ -84,7 +84,7 @@ jobs:
         run: |
           $msi = Get-ChildItem build/windows/msi/*.msi
           if ($msi.Count -ne 1) { throw "Expected one MSI, found $($msi.Count)" }
-          if ($msi.Length -lt 30MB) { throw "MSI is too small to contain a Java runtime: $($msi.Length) bytes" }
+          if ($msi.Length -lt 25MB) { throw "MSI is too small to contain a Java runtime: $($msi.Length) bytes" }
           if (-not (Test-Path build/windows/app-image/amade-web/amade-web.exe)) { throw 'amade-web.exe missing' }
           Compress-Archive -Path build/windows/app-image/amade-web -DestinationPath build/windows/amade-web-portable.zip
           Write-Host "MSI: $($msi.Name), $([math]::Round($msi.Length / 1MB)) MB"

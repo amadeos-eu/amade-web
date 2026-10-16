@@ -42,6 +42,12 @@ class AddressesTest {
     }
 
     @Test
+    void anAnchorAfterAPathStaysAnAnchor(@TempDir Path dir) throws IOException {
+        Path page = Files.writeString(dir.resolve("guide.html"), "<h2 id='install'>Install</h2>");
+        assertEquals(page.toUri() + "#install", Addresses.toUrl(page + "#install"));
+    }
+
+    @Test
     void emptyStaysEmpty() {
         assertEquals("", Addresses.toUrl("   "));
     }
