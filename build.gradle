@@ -10,7 +10,7 @@ def mainClassName = 'org.datazuul.amadeos.web.bootstrap.AmadeWebApplication'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -23,10 +23,12 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-// JavaFX 21 is the LTS line for Java 21; its updates also bring newer WebKit releases.
+// JavaFX 27 needs Java 25. It is the first release with a media plugin for FFmpeg 8 (libavcodec 62);
+// from 24 on it also has the one for FFmpeg 7.1 of Debian trixie. With an older JavaFX, <video> fails
+// whenever the system's FFmpeg is newer than its plugins.
 // The JavaFX jars carry native libraries, so the build picks those of the machine it runs on:
 // the .deb is built on Linux (amd64 or arm64), the Windows installer on Windows.
-def javafxVersion = '21.0.12'
+def javafxVersion = '27'
 def osName = System.getProperty('os.name')
 def osArch = System.getProperty('os.arch')
 def javafxPlatform = osName.startsWith('Windows') ? 'win'
@@ -132,7 +134,7 @@ Version: ${project.version}
 Section: web
 Priority: optional
 Architecture: ${debArch}
-Depends: default-jre | openjdk-21-jre | java21-runtime, libgtk-3-0t64 | libgtk-3-0
+Depends: openjdk-25-jre | java-runtime (>= 25), libgtk-3-0t64 | libgtk-3-0
 Maintainer: amadeOS Project <developers@datazuul.com>
 Description: Web browser and documentation viewer for amadeOS
  A Motif/CDE-styled web browser for the amadeOS desktop built on the

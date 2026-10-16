@@ -39,15 +39,23 @@ English, German, French, Spanish and Italian. The application follows the deskto
 
 ### Engine
 
-JavaFX 21 LTS (`21.0.12`) with WebKit 623.1; the user agent identifies as Safari 18.4. WebView has
-no service workers, no extensions, no downloads and only partial WebGL support.
+JavaFX 27 with WebKit; the user agent identifies as Safari 18.4. Video plays through the system's
+FFmpeg (`libavcodec`), for which JavaFX 27 has plugins up to FFmpeg 8 (Debian trixie has 7.1).
+
+What WebView does not have, so pages that need it do not work:
+
+- WebAssembly (e.g. the OCR text in the alexana IIIF viewer, see its
+  [roadmap](https://github.com/datazuul/alexana-ils-angular-libs/blob/main/ROADMAP.md))
+- Media Source Extensions: players built on hls.js or dash.js, YouTube and most streaming sites
+- WebM, VP8/VP9 and Ogg; MP4 (H.264/AAC), MP3 and HLS play
+- WebGL, service workers, `CompressionStream`, downloads and extensions
 
 JavaFX runs from the class path (fat jar). That gives the start-up warning *Unsupported JavaFX
 configuration*, but also makes the internal `WebConsoleListener` reachable for the console log.
 
 ## Building and testing
 
-Requirements: Java 21 JDK; `dpkg-deb` for the Debian package.
+Requirements: Java 25 JDK; `dpkg-deb` for the Debian package.
 
 `amade-commons` is taken from JitPack. If it is checked out next to this repository
 (`../amade-commons`), Gradle builds that checkout instead.
@@ -66,7 +74,7 @@ the machine it runs on. The Debian package is therefore `amd64` (or `arm64` when
 
 ### Runtime packages
 
-The Debian package depends on a Java 21 runtime and GTK 3 (`libgtk-3-0t64 | libgtk-3-0`), which the
+The Debian package depends on a Java 25 runtime and GTK 3 (`libgtk-3-0t64 | libgtk-3-0`), which the
 JavaFX libraries link against. It installs `amade-web.desktop` (`Categories=Network;WebBrowser;`)
 and registers for `text/html` and `http`/`https` links, so `xdg-open https://...` and the CUPS web
 administration in the front panel can open in amade-web.
@@ -76,7 +84,7 @@ administration in the front panel can open in amade-web.
 `./gradlew windowsInstaller` builds an installer with jpackage that includes a Java runtime, so Windows
 users need no Java. It runs only on Windows, which also makes the build pick the Windows JavaFX
 libraries; MSI and EXE also need [WiX Toolset 3](https://github.com/wixtoolset/wix3/releases) on the
-`PATH` (JDK 21 does not support WiX 4/5).
+`PATH` (JDK 25 also takes WiX 4/5).
 
 ```bat
 gradlew windowsInstaller                            :: build\windows\msi\amade-web-0.1.0.msi
