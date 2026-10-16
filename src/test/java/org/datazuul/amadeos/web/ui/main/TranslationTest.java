@@ -19,7 +19,7 @@ class TranslationTest {
     private static final Map<String, List<String>> MENUS = Map.of(
             "", List.of("menu.file", "menu.view", "menu.go", "menu.options", "menu.help"),
             "menu.file", List.of("menu.file.open", "menu.file.open-location", "menu.file.exit"),
-            "menu.view", List.of("menu.view.reload", "menu.view.stop", "menu.view.zoom-in", "menu.view.zoom-out",
+            "menu.view", List.of("menu.view.reload", "menu.view.zoom-in", "menu.view.zoom-out",
                     "menu.view.zoom-reset"),
             "menu.go", List.of("menu.go.back", "menu.go.forward", "menu.go.home"));
 
