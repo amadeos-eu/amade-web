@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'org.datazuul.amadeos'
+version = '0.1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+application {
+    mainClass = 'org.datazuul.amadeos.web.AmadeWebApplication'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+// JavaFX 21 is the LTS line for Java 21; its updates also bring newer WebKit releases.
+def javafxVersion = '21.0.12'
+def javafxPlatform = System.getProperty('os.arch') == 'aarch64' ? 'linux-aarch64' : 'linux'
+
+dependencies {
+    // Theme, Motif look, start-up and XDG helpers shared by all amadeOS applications.
+    // With ../amade-commons checked out, settings.gradle builds that checkout instead (composite build).
+    implementation 'com.github.datazuul:amade-commons:368124c'
+    // WebView inside Swing through JFXPanel; javafx.web needs controls and media as well.
+    ['base', 'graphics', 'controls', 'media', 'swing', 'web'].each { module ->
+        implementation "org.openjfx:javafx-${module}:${javafxVersion}:${javafxPlatform}"
+    }
+    runtimeOnly 'ch.qos.logback:logback-classic:1.5.18'
+}
+
+jar {
+    archiveBaseName = 'amade-web'
+    manifest {
+        attributes(
+            'Main-Class': 'org.datazuul.amadeos.web.AmadeWebApplication',
+            'Implementation-Title': 'amade-web',
+            'Implementation-Version': project.version
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
