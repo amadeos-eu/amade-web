@@ -1,13 +1,15 @@
 # amade-web
 
-Web browser and documentation viewer of the [amadeOS](https://github.com/datazuul/amadeos) desktop:
-the JavaFX WebView (WebKit) in a Motif/CDE-styled Swing window, themed through
+Documentation viewer of the [amadeOS](https://github.com/datazuul/amadeos) desktop: the JavaFX
+WebView (WebKit) in a Motif/CDE-styled Swing window, themed through
 [amade-commons](https://github.com/datazuul/amade-commons).
 
 ![amade-web showing alexana.org](docs/screenshot.png)
 
-It runs modern single-page applications such as [alexana.org](https://alexana.org) (Angular) and
-shows local HTML documentation.
+It shows local HTML documentation and help pages, and it also opens web pages, including
+single-page applications such as [alexana.org](https://alexana.org) (Angular). For everyday web
+browsing amadeOS ships Firefox ESR, because WebView lacks too much of the modern web (see
+[Engine](#engine)).
 
 ## Using it
 
@@ -75,9 +77,9 @@ the machine it runs on. The Debian package is therefore `amd64` (or `arm64` when
 ### Runtime packages
 
 The Debian package depends on a Java 25 runtime and GTK 3 (`libgtk-3-0t64 | libgtk-3-0`), which the
-JavaFX libraries link against. It installs `amade-web.desktop` (`Categories=Network;WebBrowser;`)
-and registers for `text/html` and `http`/`https` links, so `xdg-open https://...` and the CUPS web
-administration in the front panel can open in amade-web.
+JavaFX libraries link against. It installs `amade-web.desktop` (`Categories=Utility;Documentation;`),
+so the amadeOS front panel lists it in the Help drawer. It registers for `text/html` as an
+*Open with* choice but not for `http`/`https` links; in amadeOS those go to Firefox ESR.
 
 ### Windows
 
