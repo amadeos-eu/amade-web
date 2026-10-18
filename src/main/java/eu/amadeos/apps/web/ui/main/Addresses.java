@@ -1,4 +1,4 @@
-package org.datazuul.amadeos.web.ui.main;
+package eu.amadeos.apps.web.ui.main;
 
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;

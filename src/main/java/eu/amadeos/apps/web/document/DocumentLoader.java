@@ -1,6 +1,6 @@
-package org.datazuul.amadeos.web.document;
+package eu.amadeos.apps.web.document;
 
-import org.datazuul.amadeos.commons.i18n.Messages;
+import eu.amadeos.commons.i18n.Messages;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.W3CDom;
 import org.jsoup.nodes.Document;

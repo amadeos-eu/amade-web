@@ -1,10 +1,10 @@
-package org.datazuul.amadeos.web.document;
+package eu.amadeos.apps.web.document;
 
-import org.datazuul.amadeos.commons.i18n.Messages;
-import org.datazuul.amadeos.web.bootstrap.WebModule;
-import org.datazuul.amadeos.web.document.DocumentLoader.OtherFile;
-import org.datazuul.amadeos.web.document.DocumentLoader.Page;
-import org.datazuul.amadeos.web.document.DocumentLoader.WebLink;
+import eu.amadeos.commons.i18n.Messages;
+import eu.amadeos.apps.web.bootstrap.WebModule;
+import eu.amadeos.apps.web.document.DocumentLoader.OtherFile;
+import eu.amadeos.apps.web.document.DocumentLoader.Page;
+import eu.amadeos.apps.web.document.DocumentLoader.WebLink;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.w3c.dom.Element;

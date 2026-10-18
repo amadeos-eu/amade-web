@@ -1,19 +1,19 @@
-package org.datazuul.amadeos.web.ui.main;
+package eu.amadeos.apps.web.ui.main;
 
 import com.google.inject.Inject;
-import org.datazuul.amadeos.commons.app.AppInfo;
-import org.datazuul.amadeos.commons.desktop.DesktopLauncher;
-import org.datazuul.amadeos.commons.i18n.Language;
-import org.datazuul.amadeos.commons.i18n.LocaleSettings;
-import org.datazuul.amadeos.commons.i18n.Messages;
-import org.datazuul.amadeos.commons.i18n.Mnemonics;
-import org.datazuul.amadeos.commons.swing.EdtExecutor;
-import org.datazuul.amadeos.web.bootstrap.AmadeWebApplication;
-import org.datazuul.amadeos.web.document.DocumentLoader;
-import org.datazuul.amadeos.web.document.DocumentLoader.OtherFile;
-import org.datazuul.amadeos.web.document.DocumentLoader.Page;
-import org.datazuul.amadeos.web.document.DocumentLoader.Result;
-import org.datazuul.amadeos.web.document.DocumentLoader.WebLink;
+import eu.amadeos.commons.app.AppInfo;
+import eu.amadeos.commons.desktop.DesktopLauncher;
+import eu.amadeos.commons.i18n.Language;
+import eu.amadeos.commons.i18n.LocaleSettings;
+import eu.amadeos.commons.i18n.Messages;
+import eu.amadeos.commons.i18n.Mnemonics;
+import eu.amadeos.commons.swing.EdtExecutor;
+import eu.amadeos.apps.web.bootstrap.AmadeWebApplication;
+import eu.amadeos.apps.web.document.DocumentLoader;
+import eu.amadeos.apps.web.document.DocumentLoader.OtherFile;
+import eu.amadeos.apps.web.document.DocumentLoader.Page;
+import eu.amadeos.apps.web.document.DocumentLoader.Result;
+import eu.amadeos.apps.web.document.DocumentLoader.WebLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
