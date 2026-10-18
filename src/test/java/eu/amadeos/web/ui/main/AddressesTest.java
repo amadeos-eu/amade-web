@@ -1,4 +1,4 @@
-package org.datazuul.amadeos.web.ui.main;
+package eu.amadeos.web.ui.main;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

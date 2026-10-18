@@ -1,10 +1,10 @@
-package org.datazuul.amadeos.web.ui.main;
+package eu.amadeos.web.ui.main;
 
-import org.datazuul.amadeos.commons.i18n.Language;
-import org.datazuul.amadeos.commons.i18n.Messages;
-import org.datazuul.amadeos.commons.i18n.Mnemonics;
-import org.datazuul.amadeos.commons.i18n.TranslationCheck;
-import org.datazuul.amadeos.web.bootstrap.WebModule;
+import eu.amadeos.commons.i18n.Language;
+import eu.amadeos.commons.i18n.Messages;
+import eu.amadeos.commons.i18n.Mnemonics;
+import eu.amadeos.commons.i18n.TranslationCheck;
+import eu.amadeos.web.bootstrap.WebModule;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

@@ -1,6 +1,6 @@
-package org.datazuul.amadeos.web.ui.main;
+package eu.amadeos.web.ui.main;
 
-import org.datazuul.amadeos.web.document.DocumentLoader.Page;
+import eu.amadeos.web.document.DocumentLoader.Page;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xhtmlrenderer.event.DefaultDocumentListener;

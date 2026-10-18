@@ -1,9 +1,9 @@
-package org.datazuul.amadeos.web.bootstrap;
+package eu.amadeos.web.bootstrap;
 
-import org.datazuul.amadeos.commons.app.AmadeApplication;
-import org.datazuul.amadeos.commons.app.AppInfo;
-import org.datazuul.amadeos.web.ui.main.Addresses;
-import org.datazuul.amadeos.web.ui.main.BrowserWindow;
+import eu.amadeos.commons.app.AmadeApplication;
+import eu.amadeos.commons.app.AppInfo;
+import eu.amadeos.web.ui.main.Addresses;
+import eu.amadeos.web.ui.main.BrowserWindow;
 
 /**
  * Documentation viewer of the amadeOS desktop: local HTML (XHTML + CSS 2.1 with Flying Saucer), plain
