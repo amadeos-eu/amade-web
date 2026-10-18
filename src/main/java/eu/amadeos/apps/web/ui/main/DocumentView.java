@@ -1,6 +1,6 @@
-package eu.amadeos.web.ui.main;
+package eu.amadeos.apps.web.ui.main;
 
-import eu.amadeos.web.document.DocumentLoader.Page;
+import eu.amadeos.apps.web.document.DocumentLoader.Page;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xhtmlrenderer.event.DefaultDocumentListener;

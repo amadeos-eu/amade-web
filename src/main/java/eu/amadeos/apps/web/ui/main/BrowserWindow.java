@@ -1,4 +1,4 @@
-package eu.amadeos.web.ui.main;
+package eu.amadeos.apps.web.ui.main;
 
 import com.google.inject.Inject;
 import eu.amadeos.commons.app.AppInfo;
@@ -8,12 +8,12 @@ import eu.amadeos.commons.i18n.LocaleSettings;
 import eu.amadeos.commons.i18n.Messages;
 import eu.amadeos.commons.i18n.Mnemonics;
 import eu.amadeos.commons.swing.EdtExecutor;
-import eu.amadeos.web.bootstrap.AmadeWebApplication;
-import eu.amadeos.web.document.DocumentLoader;
-import eu.amadeos.web.document.DocumentLoader.OtherFile;
-import eu.amadeos.web.document.DocumentLoader.Page;
-import eu.amadeos.web.document.DocumentLoader.Result;
-import eu.amadeos.web.document.DocumentLoader.WebLink;
+import eu.amadeos.apps.web.bootstrap.AmadeWebApplication;
+import eu.amadeos.apps.web.document.DocumentLoader;
+import eu.amadeos.apps.web.document.DocumentLoader.OtherFile;
+import eu.amadeos.apps.web.document.DocumentLoader.Page;
+import eu.amadeos.apps.web.document.DocumentLoader.Result;
+import eu.amadeos.apps.web.document.DocumentLoader.WebLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

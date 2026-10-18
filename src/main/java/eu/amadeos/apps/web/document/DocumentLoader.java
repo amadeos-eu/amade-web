@@ -1,4 +1,4 @@
-package eu.amadeos.web.document;
+package eu.amadeos.apps.web.document;
 
 import eu.amadeos.commons.i18n.Messages;
 import org.jsoup.Jsoup;

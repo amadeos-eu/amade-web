@@ -1,4 +1,4 @@
-package eu.amadeos.web.bootstrap;
+package eu.amadeos.apps.web.bootstrap;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,11 @@
-package eu.amadeos.web.bootstrap;
+package eu.amadeos.apps.web.bootstrap;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Scopes;
 import com.google.inject.Singleton;
 import eu.amadeos.commons.i18n.Messages;
-import eu.amadeos.web.ui.main.BrowserWindow;
+import eu.amadeos.apps.web.ui.main.BrowserWindow;
 
 import java.util.Locale;
 
@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 public final class WebModule extends AbstractModule {
     /** The texts, {@code messages.properties} and its translations. */
-    public static final String MESSAGES = "eu.amadeos.web.messages";
+    public static final String MESSAGES = "eu.amadeos.apps.web.messages";
 
     @Override
     protected void configure() {

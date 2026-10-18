@@ -1,9 +1,9 @@
-package eu.amadeos.web.bootstrap;
+package eu.amadeos.apps.web.bootstrap;
 
 import eu.amadeos.commons.app.AmadeApplication;
 import eu.amadeos.commons.app.AppInfo;
-import eu.amadeos.web.ui.main.Addresses;
-import eu.amadeos.web.ui.main.BrowserWindow;
+import eu.amadeos.apps.web.ui.main.Addresses;
+import eu.amadeos.apps.web.ui.main.BrowserWindow;
 
 /**
  * Documentation viewer of the amadeOS desktop: local HTML (XHTML + CSS 2.1 with Flying Saucer), plain
