@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- AppStream metadata of amade-web, installed as /usr/share/metainfo/eu.amadeos.apps.web.metainfo.xml.
+     amadeOS Software shows it for the installed package; a repository's appstream-generator reads it too. -->
+<component type="desktop-application">
+  <id>eu.amadeos.apps.web</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>EUPL-1.2</project_license>
+
+  <name>amadeOS Documentation Viewer</name>
+  <name xml:lang="de">amadeOS Dokumentationsanzeige</name>
+  <name xml:lang="fr">Visionneuse de documentation amadeOS</name>
+  <name xml:lang="es">Visor de documentación de amadeOS</name>
+  <name xml:lang="it">Visualizzatore di documentazione amadeOS</name>
+
+  <summary>Shows local HTML documentation and help pages</summary>
+  <summary xml:lang="de">Zeigt lokale HTML-Dokumentation und Hilfeseiten</summary>
+  <summary xml:lang="fr">Affiche la documentation HTML locale et les pages d'aide</summary>
+  <summary xml:lang="es">Muestra documentación HTML local y páginas de ayuda</summary>
+  <summary xml:lang="it">Mostra la documentazione HTML locale e le pagine di aiuto</summary>
+
+  <description>
+    <p>amade-web shows the documentation installed on the computer: HTML pages, README and changelog files and the folders under /usr/share/doc. Nothing is loaded from the network; web links open in the web browser.</p>
+    <p xml:lang="de">amade-web zeigt die auf dem Rechner installierte Dokumentation: HTML-Seiten, README- und Changelog-Dateien und die Ordner unter /usr/share/doc. Nichts wird aus dem Netz geladen; Weblinks öffnen sich im Webbrowser.</p>
+    <p xml:lang="fr">amade-web affiche la documentation installée sur l'ordinateur : pages HTML, fichiers README et changelog et les dossiers sous /usr/share/doc. Rien n'est chargé depuis le réseau ; les liens web s'ouvrent dans le navigateur.</p>
+    <p xml:lang="es">amade-web muestra la documentación instalada en el ordenador: páginas HTML, archivos README y changelog y las carpetas de /usr/share/doc. No se carga nada de la red; los enlaces web se abren en el navegador.</p>
+    <p xml:lang="it">amade-web mostra la documentazione installata sul computer: pagine HTML, file README e changelog e le cartelle sotto /usr/share/doc. Nulla viene caricato dalla rete; i collegamenti web si aprono nel browser.</p>
+    <ul>
+      <li>HTML with style sheets and images, without scripts</li>
+      <li xml:lang="de">HTML mit Stylesheets und Bildern, ohne Skripte</li>
+      <li xml:lang="fr">HTML avec feuilles de style et images, sans scripts</li>
+      <li xml:lang="es">HTML con hojas de estilo e imágenes, sin scripts</li>
+      <li xml:lang="it">HTML con fogli di stile e immagini, senza script</li>
+      <li>Text files, also compressed with gzip</li>
+      <li xml:lang="de">Textdateien, auch mit gzip komprimiert</li>
+      <li xml:lang="fr">Fichiers texte, également compressés avec gzip</li>
+      <li xml:lang="es">Archivos de texto, también comprimidos con gzip</li>
+      <li xml:lang="it">File di testo, anche compressi con gzip</li>
+      <li>Back, forward, address field and text size</li>
+      <li xml:lang="de">Zurück, Vor, Adressfeld und Textgröße</li>
+      <li xml:lang="fr">Précédent, suivant, champ d'adresse et taille du texte</li>
+      <li xml:lang="es">Atrás, adelante, campo de dirección y tamaño del texto</li>
+      <li xml:lang="it">Indietro, avanti, campo indirizzo e dimensione del testo</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">amade-web.desktop</launchable>
+  <icon type="stock">amade-web</icon>
+  <categories>
+    <category>Utility</category>
+    <category>Documentation</category>
+  </categories>
+
+  <url type="homepage">https://github.com/datazuul/amade-web</url>
+  <url type="bugtracker">https://github.com/datazuul/amade-web/issues</url>
+  <developer id="eu.amadeos">
+    <name>amadeOS Project</name>
+  </developer>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>A help page</caption>
+      <caption xml:lang="de">Eine Hilfeseite</caption>
+      <caption xml:lang="fr">Une page d'aide</caption>
+      <caption xml:lang="es">Una página de ayuda</caption>
+      <caption xml:lang="it">Una pagina di aiuto</caption>
+      <image>https://raw.githubusercontent.com/datazuul/amade-web/main/docs/screenshots/amade-web.png</image>
+    </screenshot>
+  </screenshots>
+
+  <provides>
+    <binary>amade-web</binary>
+  </provides>
+  <content_rating type="oars-1.1"/>
+</component>
