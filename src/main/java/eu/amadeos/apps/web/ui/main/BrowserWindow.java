@@ -125,6 +125,7 @@ public final class BrowserWindow extends JFrame {
         navigate(url, true);
     }
 
+    // --8<-- [start:navigate]
     /** Shows the URL; {@code record} adds it to the history (not for back, forward and reload). */
     private void navigate(String url, boolean record) {
         EdtExecutor.requireEdt();
@@ -154,7 +155,9 @@ public final class BrowserWindow extends JFrame {
             }
         });
     }
+    // --8<-- [end:navigate]
 
+    // --8<-- [start:show]
     private void show(Result result, boolean record) {
         switch (result) {
             case Page page -> {
@@ -169,6 +172,7 @@ public final class BrowserWindow extends JFrame {
                     msg.format("status.opened-application", file.file().getFileName()));
         }
     }
+    // --8<-- [end:show]
 
     /** The page or anchor at this URL is on screen now. */
     private void shown(String url, boolean record) {
@@ -182,6 +186,7 @@ public final class BrowserWindow extends JFrame {
         updateHistoryActions();
     }
 
+    // --8<-- [start:open-elsewhere]
     private void openElsewhere(Opener opener, String doneText) {
         if (current != null) address.setText(current);
         background.execute(() -> {
@@ -196,6 +201,7 @@ public final class BrowserWindow extends JFrame {
         // Started with a web link only: show the documentation instead of an empty window.
         if (current == null) navigate(Addresses.HOME, true);
     }
+    // --8<-- [end:open-elsewhere]
 
     private interface Opener {
         void open() throws IOException;
@@ -338,6 +344,7 @@ public final class BrowserWindow extends JFrame {
         return e.getMessage() == null ? msg.get("status.unknown-error") : e.getMessage();
     }
 
+    // --8<-- [start:action]
     /** An action run on the EDT, named and with mnemonic from the texts. */
     private Action action(String key, KeyStroke accelerator, Runnable run) {
         Mnemonics.Text text = Mnemonics.parse(msg.get(key));
@@ -354,6 +361,7 @@ public final class BrowserWindow extends JFrame {
         action.putValue(Action.ACCELERATOR_KEY, accelerator);
         return action;
     }
+    // --8<-- [end:action]
 
     private static KeyStroke key(int keyCode, int modifiers) {
         return KeyStroke.getKeyStroke(keyCode, modifiers);

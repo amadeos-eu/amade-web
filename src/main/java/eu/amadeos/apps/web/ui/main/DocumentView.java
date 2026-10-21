@@ -34,6 +34,7 @@ final class DocumentView extends JPanel {
 
     DocumentView(Consumer<String> linkHandler, Consumer<String> hoverHandler) {
         super(new BorderLayout());
+        // --8<-- [start:links]
         for (FSMouseListener listener : new ArrayList<>(panel.getMouseTrackingListeners())) {
             if (listener instanceof LinkListener) panel.removeMouseTrackingListener(listener);
         }
@@ -43,6 +44,7 @@ final class DocumentView extends JPanel {
                 linkHandler.accept(resolve(uri));
             }
         });
+        // --8<-- [end:links]
         panel.addMouseTrackingListener(new DefaultFSMouseListener() {
             @Override
             public void onMouseOver(BasicPanel source, Box box) {
@@ -109,6 +111,7 @@ final class DocumentView extends JPanel {
         return null;
     }
 
+    // --8<-- [start:local-only]
     /** Loads style sheets and images from files and embedded data only; documentation has no business online. */
     private static final class LocalUserAgent extends NaiveUserAgent {
         @Override
@@ -120,4 +123,5 @@ final class DocumentView extends JPanel {
             return super.openStream(uri);
         }
     }
+    // --8<-- [end:local-only]
 }

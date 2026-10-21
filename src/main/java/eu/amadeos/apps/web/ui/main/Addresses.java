@@ -13,6 +13,7 @@ public final class Addresses {
     private Addresses() {
     }
 
+    // --8<-- [start:to-url]
     /**
      * A URL stays as it is ({@code https://...}, {@code file:...}, {@code about:blank}); an existing file
      * or a path ({@code /...}, {@code ./...}, {@code ~/...}) becomes a {@code file:} URL; {@code localhost}
@@ -36,6 +37,7 @@ public final class Addresses {
         }
         return "https://" + text;
     }
+    // --8<-- [end:to-url]
 
     private static String home() {
         Path doc = Path.of("/usr/share/doc");

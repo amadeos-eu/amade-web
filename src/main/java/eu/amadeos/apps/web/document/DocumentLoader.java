@@ -48,6 +48,7 @@ public final class DocumentLoader {
         this.msg = msg;
     }
 
+    // --8<-- [start:results]
     /** What a URL leads to. */
     public sealed interface Result permits Page, WebLink, OtherFile {
     }
@@ -80,7 +81,9 @@ public final class DocumentLoader {
     /** A local file this viewer does not show (PDF, office documents, ...): for its application. */
     public record OtherFile(Path file) implements Result {
     }
+    // --8<-- [end:results]
 
+    // --8<-- [start:load]
     public Result load(String url) throws IOException {
         String fragment = "";
         String location = url.strip();
@@ -123,6 +126,7 @@ public final class DocumentLoader {
         }
         return new OtherFile(path);
     }
+    // --8<-- [end:load]
 
     /** The extension in lower case, empty if there is none (README, changelog). */
     static String extension(String name) {
@@ -189,6 +193,7 @@ public final class DocumentLoader {
         return page(html, url, name);
     }
 
+    // --8<-- [start:page]
     /** Scripts never run here; Flying Saucer's default style sheet only matches XHTML elements. */
     private static Page page(Document html, String url, String title) {
         html.select("script").remove();
@@ -196,4 +201,5 @@ public final class DocumentLoader {
         if (root != null) root.attr("xmlns", XHTML_NAMESPACE);
         return new Page(W3CDom.convert(html), url, title);
     }
+    // --8<-- [end:page]
 }
