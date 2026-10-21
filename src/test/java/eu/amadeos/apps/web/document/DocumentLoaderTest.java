@@ -35,6 +35,7 @@ class DocumentLoaderTest {
     @TempDir
     Path dir;
 
+    // --8<-- [start:repaired]
     @Test
     void htmlIsRepairedIntoXhtmlWithoutScripts() throws IOException {
         Path file = Files.writeString(dir.resolve("guide.html"),
@@ -49,6 +50,7 @@ class DocumentLoaderTest {
         assertEquals(2, page.document().getElementsByTagName("p").getLength());
         assertEquals(0, page.document().getElementsByTagName("script").getLength());
     }
+    // --8<-- [end:repaired]
 
     @Test
     void aDirectoryShowsItsIndexPage() throws IOException {
@@ -99,6 +101,7 @@ class DocumentLoaderTest {
         assertEquals(png.toUri().toString(), img.getAttribute("src"));
     }
 
+    // --8<-- [start:elsewhere]
     @Test
     void binaryFilesAndPdfsGoToTheirApplications() throws IOException {
         Path pdf = Files.writeString(dir.resolve("manual.pdf"), "%PDF-1.4 looks like text");
@@ -107,6 +110,7 @@ class DocumentLoaderTest {
         assertEquals(new OtherFile(pdf), loader.load(pdf.toUri().toString()));
         assertEquals(new OtherFile(binary), loader.load(binary.toUri().toString()));
     }
+    // --8<-- [end:elsewhere]
 
     @Test
     void webLinksGoToTheWebBrowser() throws IOException {
