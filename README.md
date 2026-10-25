@@ -79,7 +79,7 @@ Requirements: Java 25 JDK; `dpkg-deb` for the Debian package.
 ./gradlew test                 # unit tests
 ./gradlew run                  # start the viewer
 ./gradlew run --args="docs/index.html"
-./gradlew deb                  # build/distributions/amade-web_0.1.0_all.deb
+./gradlew deb                  # build/distributions/amade-web_0.0.0~dev.0_all.deb
 ./gradlew installToAmadeOs     # copy the .deb into ../amadeos/config/packages.chroot/
 ```
 
@@ -98,7 +98,7 @@ users need no Java. It runs only on Windows; MSI and EXE also need
 Without `/usr/share/doc` the home page is the user's home directory.
 
 ```bat
-gradlew windowsInstaller                            :: build\windows\msi\amade-web-0.1.0.msi
+gradlew windowsInstaller                            :: build\windows\msi\amade-web-0.0.0.msi
 gradlew windowsInstaller -PinstallerType=exe        :: setup .exe
 gradlew windowsInstaller -PinstallerType=app-image  :: folder with amade-web.exe, no WiX needed
 ```
