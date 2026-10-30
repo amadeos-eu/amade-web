@@ -50,8 +50,8 @@
     <category>Documentation</category>
   </categories>
 
-  <url type="homepage">https://github.com/datazuul/amade-web</url>
-  <url type="bugtracker">https://github.com/datazuul/amade-web/issues</url>
+  <url type="homepage">https://github.com/amadeos-eu/amade-web</url>
+  <url type="bugtracker">https://github.com/amadeos-eu/amade-web/issues</url>
   <developer id="eu.amadeos">
     <name>amadeOS Project</name>
   </developer>
@@ -63,7 +63,7 @@
       <caption xml:lang="fr">Une page d'aide</caption>
       <caption xml:lang="es">Una página de ayuda</caption>
       <caption xml:lang="it">Una pagina di aiuto</caption>
-      <image>https://raw.githubusercontent.com/datazuul/amade-web/main/docs/screenshots/amade-web.png</image>
+      <image>https://raw.githubusercontent.com/amadeos-eu/amade-web/main/docs/screenshots/amade-web.png</image>
     </screenshot>
   </screenshots>
 

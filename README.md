@@ -1,9 +1,9 @@
 # amade-web
 
-Documentation viewer of the [amadeOS](https://github.com/datazuul/amadeos) desktop: local HTML
+Documentation viewer of the [amadeOS](https://github.com/amadeos-eu/amadeos) desktop: local HTML
 rendered with [Flying Saucer](https://github.com/flyingsaucerproject/flyingsaucer) (XHTML +
 CSS 2.1) in a Motif/CDE-styled Swing window, themed through
-[amade-commons](https://github.com/datazuul/amade-commons).
+[amade-commons](https://github.com/amadeos-eu/amade-commons).
 
 ![amade-web showing the Python documentation](docs/screenshot.png)
 
